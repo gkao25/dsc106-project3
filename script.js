@@ -88,25 +88,26 @@ d3.csv("./data/stacked_data.csv", function(data) {
         .style("opacity", 0)
         .attr("text-anchor", "left")
         .attr("alignment-baseline", "middle")
-
-    // Create a rect on top of the svg area: this rectangle recovers mouse position
-    svg
-      .append('rect')
-      .style("fill", "none")
-      .style("pointer-events", "all")
-      .attr('width', width)
-      .attr('height', height)
-      .on('mouseover', mouseover)
-      .on('mousemove', mousemove)
-      .on('mouseout', mouseout);
-
-
+     
+    function mousemove(selectedGroup) {
+      var x0 = x.invert(d3.mouse(this)[0]);
+      var dataFilter = data.filter(function(d) { return d.words == selectedGroup; });
+      var i = bisect(dataFilter, x0, 1);
+      selectedData = dataFilter[i];
+      focus
+          .attr("cx", x(selectedData.year))
+          .attr("cy", y(selectedData.count));
+      focusText
+          .html("year:" + selectedData.year + ",  " + "count:" + selectedData.count)
+          .attr("x", x(selectedData.year) + 15)
+          .attr("y", y(selectedData.count));
+  }    
     // What happens when the mouse move -> show the annotations at the right positions.
     function mouseover() {
       focus.style("opacity", 1)
       focusText.style("opacity",1)
     }
-
+  
     // A function that update the chart
     function update(selectedGroup) {
 
@@ -122,26 +123,38 @@ d3.csv("./data/stacked_data.csv", function(data) {
             .x(function(d) { return x(d.year) })
             .y(function(d) { return y(+d.count) })
           )
-          .attr("stroke", function(d){ return myColor(selectedGroup) })
+          .attr("stroke", function(d){ return myColor(selectedGroup); })
+      // Update the mousemove function with the new data
+      svg.on('mousemove', function() {
+        var x0 = x.invert(d3.mouse(this)[0]);
+        var i = bisect(dataFilter, x0, 1);
+        selectedData = dataFilter[i];
+        focus
+            .attr("cx", x(selectedData.year))
+            .attr("cy", y(selectedData.count));
+        focusText
+            .html("year:" + selectedData.year + ",  " + "count:" + selectedData.count)
+            .attr("x", x(selectedData.year) + 15)
+            .attr("y", y(selectedData.count));
+      });
     }
 
-    function mousemove() {
-      // recover coordinate we need
-      var x0 = x.invert(d3.mouse(this)[0]);
-      var i = bisect(data, x0, 1);
-      selectedData = data[i]
-      focus
-        .attr("cx", x(selectedData.year))
-        .attr("cy", y(selectedData.count))
-      focusText
-        .html("year:" + selectedData.year + ",  " + "count:" + selectedData.count)
-        .attr("x", x(selectedData.year)+15)
-        .attr("y", y(selectedData.count))
-      }
+    // Create a rect on top of the svg area: this rectangle recovers mouse position
+    //needs work, mousemove not working
+    svg
+      .append('rect')
+      .style("fill", "none")
+      .style("pointer-events", "all")
+      .attr('width', width)
+      .attr('height', height)
+      .on('mouseover', mouseover)
+      .on('mousemove', mousemove)
+      .on('mouseout', mouseout);
+
     function mouseout() {
       focus.style("opacity", 0)
       focusText.style("opacity", 0)
-    }
+      }
 
     // When the button is changed, run the updateChart function
     d3.select("#selectButton").on("change", function(d) {
