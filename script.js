@@ -88,80 +88,59 @@ d3.csv("./data/stacked_data.csv", function(data) {
         .style("opacity", 0)
         .attr("text-anchor", "left")
         .attr("alignment-baseline", "middle")
-     
-    function mousemove(selectedGroup) {
+
+    var selectedGroup = allGroup[0];
+    var tooltipData = data.filter(function(d) { return d.words == selectedGroup; }); 
+    
+    // Create a rect on top of the svg area: this rectangle recovers mouse position
+    var rect = svg.append('rect')
+      .style("fill", "none")
+      .style("pointer-events", "all")
+      .attr('width', width)
+      .attr('height', height);
+    // What happens when the mouse move -> show the annotations at the right positions.
+    rect.on('mouseover', mouseover)
+      .on('mousemove', mousemove)
+      .on('mouseout', mouseout);
+
+    function mousemove() {
       var x0 = x.invert(d3.mouse(this)[0]);
-      var dataFilter = data.filter(function(d) { return d.words == selectedGroup; });
-      var i = bisect(dataFilter, x0, 1);
-      selectedData = dataFilter[i];
-      focus
-          .attr("cx", x(selectedData.year))
+      var i = bisect(tooltipData, x0, 1);
+      var selectedData = tooltipData[i];
+      focus.attr("cx", x(selectedData.year))
           .attr("cy", y(selectedData.count));
-      focusText
-          .html("year:" + selectedData.year + ",  " + "count:" + selectedData.count)
+      focusText.html("Year: " + selectedData.year + ", Count: " + selectedData.count)
           .attr("x", x(selectedData.year) + 15)
           .attr("y", y(selectedData.count));
-  }    
+    }
     // What happens when the mouse move -> show the annotations at the right positions.
     function mouseover() {
       focus.style("opacity", 1)
       focusText.style("opacity",1)
     }
-  
-    // A function that update the chart
-    function update(selectedGroup) {
-
-      // Create new data with the selection?
-      var dataFilter = data.filter(function(d){return d.words==selectedGroup})
-
-      // Give these new data to update line
-      line
-          .datum(dataFilter)
-          .transition()
-          .duration(1000)
-          .attr("d", d3.line()
-            .x(function(d) { return x(d.year) })
-            .y(function(d) { return y(+d.count) })
-          )
-          .attr("stroke", function(d){ return myColor(selectedGroup); })
-      // Update the mousemove function with the new data
-      svg.on('mousemove', function() {
-        var x0 = x.invert(d3.mouse(this)[0]);
-        var i = bisect(dataFilter, x0, 1);
-        selectedData = dataFilter[i];
-        focus
-            .attr("cx", x(selectedData.year))
-            .attr("cy", y(selectedData.count));
-        focusText
-            .html("year:" + selectedData.year + ",  " + "count:" + selectedData.count)
-            .attr("x", x(selectedData.year) + 15)
-            .attr("y", y(selectedData.count));
-      });
-    }
-
-    // Create a rect on top of the svg area: this rectangle recovers mouse position
-    //needs work, mousemove not working
-    svg
-      .append('rect')
-      .style("fill", "none")
-      .style("pointer-events", "all")
-      .attr('width', width)
-      .attr('height', height)
-      .on('mouseover', mouseover)
-      .on('mousemove', mousemove)
-      .on('mouseout', mouseout);
-
     function mouseout() {
       focus.style("opacity", 0)
       focusText.style("opacity", 0)
-      }
-
+    }
+    // A function that update the chart
+    function update(selectedGroup) {
+      var dataFilter = data.filter(function(d) { return d.words == selectedGroup; });
+      line.datum(dataFilter)
+          .transition()
+          .duration(1000)
+          .attr("d", d3.line()
+            .x(function(d) { return x(d.year); })
+            .y(function(d) { return y(+d.count); })
+          )
+          .attr("stroke", function(d) { return myColor(selectedGroup); });
+    }
+    // Initialize the chart with the first group
+    update(selectedGroup);
     // When the button is changed, run the updateChart function
     d3.select("#selectButton").on("change", function(d) {
-        // recover the option that has been chosen
-        var selectedOption = d3.select(this).property("value")
-        // run the updateChart function with this selected option
-        update(selectedOption)
+      selectedGroup = d3.select(this).property("value");
+      update(selectedGroup);
+      tooltipData = data.filter(function(d) { return d.words == selectedGroup; });
     })
 
 })
