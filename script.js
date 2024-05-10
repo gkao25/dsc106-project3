@@ -1,6 +1,6 @@
 // set the dimensions and margins of the graph
-var margin = {top: 10, right: 30, bottom: 30, left: 60},
-    width = 460 - margin.left - margin.right,
+var margin = {top: 10, right: 200, bottom: 30, left: 60},
+    width = 1200 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
@@ -56,6 +56,19 @@ d3.csv("./data/stacked_data.csv", function(data) {
     svg.append("g")
       .call(d3.axisLeft(y));
 
+    // Initialize line with first group of the list
+    var line = svg
+      .append('g')
+      .append("path")
+        .datum(data.filter(function(d){return d.words==allGroup[0]}))
+        .attr("d", d3.line()
+          .x(function(d) { return x(d.year) })
+          .y(function(d) { return y(+d.count) })
+        )
+        .attr("stroke", function(d){ return myColor("valueA") })
+        .style("stroke-width", 4)
+        .style("fill", "none")
+
     // This allows to find the closest X index of the mouse:
     var bisect = d3.bisector(function(d) { return d.year; }).left;
 
@@ -94,25 +107,12 @@ d3.csv("./data/stacked_data.csv", function(data) {
       focusText.style("opacity",1)
     }
 
-    // Initialize line with first group of the list
-    var line = svg
-      .append('g')
-      .append("path")
-        .datum(data.filter(function(d){return d.words==allGroup[0]}))
-        .attr("d", d3.line()
-          .x(function(d) { return x(d.year) })
-          .y(function(d) { return y(+d.count) })
-        )
-        .attr("stroke", function(d){ return myColor("valueA") })
-        .style("stroke-width", 4)
-        .style("fill", "none")
-
     // A function that update the chart
     function update(selectedGroup) {
 
       // Create new data with the selection?
       var dataFilter = data.filter(function(d){return d.words==selectedGroup})
-      
+
       // Give these new data to update line
       line
           .datum(dataFilter)
@@ -134,7 +134,7 @@ d3.csv("./data/stacked_data.csv", function(data) {
         .attr("cx", x(selectedData.year))
         .attr("cy", y(selectedData.count))
       focusText
-        .html("x:" + selectedData.year + "  -  " + "y:" + selectedData.count)
+        .html("year:" + selectedData.year + ",  " + "count:" + selectedData.count)
         .attr("x", x(selectedData.year)+15)
         .attr("y", y(selectedData.count))
       }
