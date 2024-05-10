@@ -13,10 +13,10 @@ var svg = d3.select("#my_dataviz")
           "translate(" + margin.left + "," + margin.top + ")");
 
 //Read the data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered.csv", function(data) {
+d3.csv("./data/stacked_data.csv", function(data) {
 
     // List of groups (here I have one group per column)
-    let allGroup = d3.map(data, function(d){return(d.name)}).keys()
+    let allGroup = d3.map(data, function(d){return(d.words)}).keys()
 
     // add the options to the button
     d3.select("#selectButton")
