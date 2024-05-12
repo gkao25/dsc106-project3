@@ -76,18 +76,18 @@ d3.csv("./data/stacked_data.csv", function(data) {
     var focus = svg
       .append('g')
       .append('circle')
-        .style("fill", "none")
-        .attr("stroke", "black")
-        .attr('r', 8.5)
-        .style("opacity", 10)
+      .style("fill", "none")
+      .attr("stroke", "black")
+      .attr('r', 8.5)
+      .style("opacity", 10)
 
     // Create the text that travels along the curve of chart
     var focusText = svg
       .append('g')
       .append('text')
-        .style("opacity", 0)
-        .attr("text-anchor", "left")
-        .attr("alignment-baseline", "middle")
+      .style("opacity", 0)
+      .attr("text-anchor", "left")
+      .attr("alignment-baseline", "middle")
 
     var selectedGroup = allGroup[0];
     var tooltipData = data.filter(function(d) { return d.words == selectedGroup; }); 
@@ -140,6 +140,7 @@ d3.csv("./data/stacked_data.csv", function(data) {
 
     // Initialize the chart with the first group
     update(selectedGroup);
+    
     // When the button is changed, run the updateChart function
     d3.select("#selectButton").on("change", function(d) {
       selectedGroup = d3.select(this).property("value");
