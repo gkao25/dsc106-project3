@@ -1,0 +1,28 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 18px;
+    margin-top: 0;
+}
+
+#selectButton {
+    margin-bottom: 20px;
+}
+
+#my_dataviz {
+    margin-top: 20px;
+}
