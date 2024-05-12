@@ -1,7 +1,7 @@
 // set the dimensions and margins of the graph
-var margin = {top: 10, right: 200, bottom: 50, left: 60},
-    width = 1200 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+var margin = {top: 0, right: 200, bottom: 50, left: 100},
+    width = 1400 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
@@ -79,7 +79,7 @@ d3.csv("./data/stacked_data.csv", function(data) {
         .style("fill", "none")
         .attr("stroke", "black")
         .attr('r', 8.5)
-        .style("opacity", 0)
+        .style("opacity", 10)
 
     // Create the text that travels along the curve of chart
     var focusText = svg
@@ -98,6 +98,7 @@ d3.csv("./data/stacked_data.csv", function(data) {
       .style("pointer-events", "all")
       .attr('width', width)
       .attr('height', height);
+
     // What happens when the mouse move -> show the annotations at the right positions.
     rect.on('mouseover', mouseover)
       .on('mousemove', mousemove)
@@ -113,6 +114,7 @@ d3.csv("./data/stacked_data.csv", function(data) {
           .attr("x", x(selectedData.year) + 15)
           .attr("y", y(selectedData.count));
     }
+
     // What happens when the mouse move -> show the annotations at the right positions.
     function mouseover() {
       focus.style("opacity", 1)
@@ -122,6 +124,7 @@ d3.csv("./data/stacked_data.csv", function(data) {
       focus.style("opacity", 0)
       focusText.style("opacity", 0)
     }
+
     // A function that update the chart
     function update(selectedGroup) {
       var dataFilter = data.filter(function(d) { return d.words == selectedGroup; });
@@ -134,6 +137,7 @@ d3.csv("./data/stacked_data.csv", function(data) {
           )
           .attr("stroke", function(d) { return myColor(selectedGroup); });
     }
+
     // Initialize the chart with the first group
     update(selectedGroup);
     // When the button is changed, run the updateChart function

@@ -6,11 +6,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+
 <!-- Load d3.js -->
-
-
-
-
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <h1>Popularity of words in songs in Billboard Top 100's history</h1>
@@ -39,23 +36,33 @@
 <!-- Write up -->
 <br>
 
-<h2>Design Decicisons</h2>
+<h2>Design Decisions</h2>
 
 <p
     >We chose to use a line chart to visualize the change in usage over time, with
     the x-axis representing the years and the y-axis representing the total count 
     per year, as labeled on the visualization. We thought about using an 
-    area chat but found that line charts have more interactivity such as a dropsdown 
+    area chart but found that line charts have more interactivity such as a dropdown 
     menu and tooltip. 
 </p>
 
 <p>
     The line color changes every time you pick a new word from the dropdown menu 
-    and has a smooth transition. 
+    and has a smooth transition. This signifies the change in the graph according 
+    to the new user interaction. 
     The words in the dropdown are sorted by the total count throughout all the 
-    years. When you start typing in the dropdown menu, it highlights to the best 
+    years (e.g. "love" is the overall most used word, "sweet" is the 100th). 
+    When you start typing in the dropdown menu, it highlights to the best 
     matching word for easier selection, instead of scrolling through all the words. 
-    These properties are all given by the D3 sample code. 
+    These properties are all provided by the D3 sample code. 
+</p>
+
+<p>
+    We chose a more stylish font called Montserrat. 
+    The headers are given a different color to make them pop out 
+    a little more. The background of the page is changed to an off-white 
+    color so it's less straining to look at. We also added some padding to the 
+    end of the page so the text doesn't end abruptly, right at the edge of the window. 
 </p>
 
 <br>
@@ -74,9 +81,9 @@
     dataset, we selected the top 100 most used words throughout all the years 
     and manually filtered out some meaningless words such as "oh", "ah", "la", 
     as well as curse words that are inappropriate for this school project. 
-    We want to see the difference by year, so we grouped them together then summed the words 
-    and counts. We looked at the sample dataset giving by the D3 website to see how 
-    organize the dataset better, and decided to stack
+    We want to see the trends and differences over time, so we grouped them by year then summed the words 
+    and their frequencies in the datset. We looked at the sample dataset given by the D3 website to see how 
+    to organize the dataset better, and decided to 
     stack the rows into a way that D3 can easly read. The processed dataset.csv 
     have three columns: year, word, and count. The data cleaning process was done by Judel 
     and Gloria and took about 2 hours.
@@ -94,15 +101,8 @@
 </p>
 
 <p>
-    The style of the page, such as headings, fonts, and colors are done last 
-    after the visualization. We chose a easy-to-read and common Sans-serif font 
-    called Helvetica. The headers are given a different color to make them pop out 
-    a little more. The background of the page is also changed to an off-white 
-    color so it's less straining to look at. We also added some padding to the 
-    end of the page so the text doesn't end abruptly, right at the edge of the window. 
-</p>
-
-<p>
+    The style of the page, such as headings, fonts, and colors was done last 
+    after the visualization. 
     This writeup was drafted by Gloria and finished collectively by all three 
     people in the group. 
 </p>
