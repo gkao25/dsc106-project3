@@ -4,16 +4,96 @@
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
 
+<!-- Color Scale -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
 <h1>DSC 106 Project 3</h1>
 <h3>by Gloria Kao, Eldrick Dean Solano, Judel Ancayan</h3>
+<br>
+<h2>
+    What are the top 100 most used words in song lyrics and how does their usage change 
+    over time?
+</h2>
 
 <!-- Initialize a select button -->
 <select id="selectButton"></select>
 
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
-
 <script src="script.js"></script>
+<link rel="stylesheet" href="style.css">
 
-<!-- Color Scale -->
-<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<p>Source:
+    <a href="https://www.kaggle.com/datasets/brianblakely/top-100-songs-and-lyrics-from-1959-to-2019/data">
+        Top 100 Songs & Lyrics By Year 1959 - 2023 (USA)
+    </a>
+</p>
+
+
+<!-- Write up -->
+<br>
+
+<h2>Design Decicisons</h2>
+
+<p
+    >We chose to use a line chart to visualize the change in usage over time, with
+    the x-axis representing the years and the y-axis representing the total count 
+    per year, as labeled on the visualization. 
+</p>
+
+<p>
+    The line color changes every time you pick a new word from the dropdown menu 
+    and has a smooth transition. 
+    The words in the dropdown are sorted by the total count throughout all the 
+    years. When you start typing in the dropdown menu, it highlights to the best 
+    matching word for easier selection, instead of scrolling through all the words. 
+</p>
+
+<br>
+
+<h2>Development Process</h2>
+
+<p>
+    During dedicated class time we decided on a topic we would all like to work 
+    on, and found a dataset from Kaggle.
+</p>
+
+<p>
+    The first step to creating this data visualization is deciding what exactly
+    we would like to present and cleaning the data correspondingly. We want to 
+    know what are the most used words in song lyrics. Due to the size of the 
+    dataset, we selected the top 100 most used words throughout all the years 
+    and manually filtered out some meaningless words such as "oh", "ah", "la", 
+    as well as curse words that are inappropriate for this school project. 
+    We want to see the difference by year, so we grouped them together then summed the words 
+    and counts. We looked at the sample dataset giving by the D3 website to see how 
+    organize the dataset better, and decided to stack
+    stack the rows into a way that D3 can easly read. The processed dataset.csv 
+    have three columns: year, word, and count. The data cleaning process was done by Judel 
+    and Gloria and took about 2 hours.
+</p>
+
+<p>
+    We used the sample code for the linechart from 
+    <a href="https://d3-graph-gallery.com/line.html">
+        the D3 website
+    </a>
+    , particularly the line chart with dropdown menu and the tooltip. We had some 
+    problem making sure the tooltip would match up with the line as we pick 
+    a different word from the dropdown menu. This part was mostly done by Dean 
+    and Gloria, and took about __ hours. 
+</p>
+
+<p>
+    The style of the page, such as headings, fonts, and colors are done last 
+    after the visualization. We chose a easy-to-read and common Sans-serif font 
+    called Helvetica. The headers are given a different color to make them pop out 
+    a little more. The background of the page is also changed to an off-white 
+    color so it's less straining to look at. We also added some padding to the 
+    end of the page so the text doesn't end abruptly, right at the edge of the window. 
+</p>
+
+<p>
+    This writeup was drafted by Gloria and finished collectively by all three 
+    people in the group. 
+</p>

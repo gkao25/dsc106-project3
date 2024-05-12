@@ -1,5 +1,5 @@
 // set the dimensions and margins of the graph
-var margin = {top: 10, right: 200, bottom: 30, left: 60},
+var margin = {top: 10, right: 200, bottom: 50, left: 60},
     width = 1200 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
@@ -142,5 +142,22 @@ d3.csv("./data/stacked_data.csv", function(data) {
       update(selectedGroup);
       tooltipData = data.filter(function(d) { return d.words == selectedGroup; });
     })
+
+    // Add labels to axes
+    svg.append("text")
+      .attr("class", "x label")
+      .attr("text-anchor", "middle")
+      .attr("x", width/2)
+      .attr("y", height + 40)
+      .text("Year");
+
+    svg.append("text")
+      .attr("class", "y label")
+      .attr("text-anchor", "middle")
+      .attr("x", -height/2)
+      .attr("y", -55)
+      .attr("dy", ".75em")
+      .attr("transform", "rotate(-90)")
+      .text("Total Count per Year");
 
 })

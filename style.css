@@ -1,0 +1,37 @@
+/* || general styles */
+
+html {
+    font-family: 'helvetica neue', helvetica, arial, sans-serif;
+  }
+  
+  body {
+    width: 90%;
+    margin: 5px auto;
+    padding-top: 10px;
+    padding-bottom: 100px;
+    background-color: #f5f5f5;
+  }
+  
+  h1, h2, h3 {
+    font-family: 'Helvetica', Sans-serif;
+  }
+  
+  /* header styles */
+  
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  h2 {
+    color: #1d3557;
+  }
+
+  h3 {
+    text-align: center;
+    color: #495057;
+  }
+  
+  p {
+    line-height: 1.5;
+  }
